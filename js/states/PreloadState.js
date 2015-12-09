@@ -2,7 +2,7 @@ var PreloadState = {
 	//load the game assets before the game starts
   preload: function() {
 
-    this.load.spritesheet('purple-vert', 'assets/images/purple/up-tp.png', 29, 35, 7, 0, 1);    
+    this.load.spritesheet('purple-guy', 'images/purple/ss-tp.png', 30, 35, 13, 0, 1);    
     // this.load.image('apple', 'assets/images/apple.png');    
     // this.load.image('candy', 'assets/images/candy.png');    
     // this.load.image('rotate', 'assets/images/rotate.png');    
