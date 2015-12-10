@@ -2,36 +2,50 @@ function Player(sprite) {
     "use strict";
     this.sprite = sprite;
     this.RUNNING_SPEED = 100; 
+    var self = this;
+    
+    var move = function(controls) {
+        if(controls.any) {
+            if(controls.horizontal) {
+                var scale;
+                if(controls.left) {
+                    self.sprite.body.velocity.x = -self.RUNNING_SPEED;
+                    scale = 1;
+                } else {
+                    self.sprite.body.velocity.x = self.RUNNING_SPEED;
+                    scale = -1;
+                }
+                
+                if(!controls.vertical) {
+                    self.sprite.animations.play('left', 5, true);
+                    self.sprite.scale.setTo(scale, 1);
+                }
+            } else {
+                self.sprite.body.velocity.x = 0;
+            }
+            
+            if(controls.vertical) {
+                var anim;
+                if(controls.up) {
+                    self.sprite.body.velocity.y = -self.RUNNING_SPEED;
+                    anim = 'up';
+                } else {
+                    self.sprite.body.velocity.y = self.RUNNING_SPEED;
+                    anim = 'down';
+                }
+                
+                self.sprite.animations.play(anim, 5, true);
+                self.sprite.scale.setTo(1);
+            } else {
+                self.sprite.body.velocity.y = 0;
+            }
+        } else {
+            self.sprite.animations.play('stop');
+            self.sprite.body.velocity.setTo(0);
+        }
+    };
     
     this.update = function(cursors) {
-        this.sprite.body.velocity.setTo(0);
-        this.sprite.scale.setTo(1);
-        
-        if(!cursors.left.isDown && !cursors.right.isDown &&
-           !cursors.up.isDown && !cursors.down.isDown) {
-            this.sprite.animations.play('stop');
-        }
-        
-        if(cursors.left.isDown) {
-            this.sprite.body.velocity.x = -this.RUNNING_SPEED;
-            if(!cursors.up.isDown && !cursors.down.isDown)
-                this.sprite.animations.play('left', 5, true);
-        }
-        else if(cursors.right.isDown) {
-            this.sprite.body.velocity.x = this.RUNNING_SPEED;
-            if(!cursors.up.isDown && !cursors.down.isDown) {
-                this.sprite.animations.play('left', 5, true);
-                this.sprite.scale.setTo(-1, 1);
-            }
-        }
-
-        if(cursors.up.isDown) {
-            this.sprite.body.velocity.y = -this.RUNNING_SPEED;
-            this.sprite.animations.play('up', 5, true);
-        }
-        else if(cursors.down.isDown) {
-            this.sprite.body.velocity.y = this.RUNNING_SPEED;
-            this.sprite.animations.play('down', 5, true);
-        }
+        move(cursors);
     }
 }

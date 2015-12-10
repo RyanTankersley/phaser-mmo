@@ -19,6 +19,8 @@ var GameState = {
     },
     //executed multiple times per second
     update: function() {
-        this.guy.update(this.cursors);
+        var c = this.cursors;
+        var controls = new Controls(c.left.isDown, c.right.isDown, c.up.isDown, c.down.isDown);
+        this.guy.update(controls);
     }
 };
