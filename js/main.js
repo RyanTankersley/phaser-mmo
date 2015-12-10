@@ -1,3 +1,4 @@
+"use strict";
 //initiate the Phaser framework
 var game = new Phaser.Game(360, 640, Phaser.AUTO);
 

@@ -1,5 +1,6 @@
+"use strict";
 var HomeState = {
-create: function() {
-this.state.start('GameState');
-}
+    create: function() {
+        this.state.start('GameState');
+    }
 };
