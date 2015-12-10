@@ -11,5 +11,8 @@
   "dependencies": {
     "express": "^4.13.3",
     "phaser": "^2.4.4"
+  },
+  "devDependencies": {
+    "jasmine": "^2.4.1"
   }
 }
