@@ -1,4 +1,4 @@
-this.Controls = function(isLeft, isRight, isUp, isDown) {
+function Controls(isLeft, isRight, isUp, isDown) {
     this.left = isLeft;
     this.right = isRight;
     this.up = isUp;
