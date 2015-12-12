@@ -19,16 +19,11 @@ io.on('connection', function(socket) {
     socket.on('send-location', function(id, location) {
         socket.broadcast.emit('location-update', {id: id, location: location});
         var user = _.where(users, {'id': id});
-        console.log(user);
         if(!user.length) {
             user = {'id': id, 'location': location};
             users.push(user);
         }
         
         user.location = location;
-        console.log(users);
-       
-        console.log(id);
-        console.log(location);
    });
 });
