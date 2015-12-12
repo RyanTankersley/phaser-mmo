@@ -1,4 +1,5 @@
-var PreloadState = {
+"use strict";
+    var PreloadState = {
 	//load the game assets before the game starts
   preload: function() {
 
