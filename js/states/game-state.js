@@ -12,6 +12,7 @@ var GameState = {
         var self = this;
         this.factory = new PlayerFactory(this.game);
         this.guy = this.factory.createPlayer(100, 100, 'purple-guy');
+        
         socket.on('location-update', function(data) {
             var user = null;
             for(var i = 0; i < self.users.length; i++) {
@@ -27,7 +28,7 @@ var GameState = {
             }
             user.update(data.location);
             console.log(data);
-        })
+        });
     },
     //executed multiple times per second
     update: function() {

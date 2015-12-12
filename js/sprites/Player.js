@@ -91,7 +91,7 @@ function PlayerFactory(game) {
     };
     
     this.createNonPlayer = function(x, y, key, name) {
-        var sprite = getSprite();
+        var sprite = getSprite(x, y, key);
         return new NonPlayer(sprite, name, getAnimationManager(sprite));
     }
 };
