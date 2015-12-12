@@ -37,9 +37,4 @@ function NonPlayer(sprite, name, animator) {
         else
             animator.stop();
     };
-    
-    this.stop = function(loc) {
-        prevLoc = loc;
-        animator.stop();
-    }
 }
