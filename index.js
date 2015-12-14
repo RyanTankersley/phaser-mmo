@@ -15,15 +15,23 @@ app.use(express.static('node_modules'));
 
 var users = [];
 io.on('connection', function(socket) {
-    socket.emit('users', users);
+    socket.on('get-users', function() {
+        console.log(users);
+        socket.emit('users', users);    
+    });
+    
     socket.on('send-location', function(id, location) {
         socket.broadcast.emit('location-update', {id: id, location: location});
-        var user = _.where(users, {'id': id});
-        if(!user.length) {
-            user = {'id': id, 'location': location};
-            users.push(user);
-        }
         
-        user.location = location;
+        var index = _.findIndex(users, function(item) {
+            return item.id == id;
+        });
+        
+        if(index < 0) {
+            users.push({'id': id, 'location': location});
+        }
+        else {
+            users[index].location = location; 
+        }
    });
 });

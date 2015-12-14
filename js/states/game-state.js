@@ -1,5 +1,19 @@
 "use strict";
 var GameState = {
+    
+    loadUser: function(data) {
+        console.log('data');
+        console.log(data);
+        var user = _.where(this.users, {'name': data.id});
+        if(!user.length) {
+            user = this.factory.createNonPlayer(data.location.x, data.location.y, 'purple-guy', data.id);
+            user.actualLocation = data.location
+            this.users.push(user);
+        } else {
+            user[0].actualLocation = data.location;
+        }
+    },
+    
     init: function() {
         this.game.time.advancedTiming = true; //this.game.fps for fps
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -14,16 +28,16 @@ var GameState = {
         this.factory = new PlayerFactory(this.game);
         this.guy = this.factory.createPlayer(100, 100, 'purple-guy');
         
+        socket.emit('get-users');
+        
+        socket.on('users', function(users) {
+            for(var user in users) {
+                self.loadUser(users[user]);
+            }
+        });
+        
         socket.on('location-update', function(data) {
-            var user = _.where(self.users, {'name': data.id});
-            if(!user.length) {
-                user = self.factory.createNonPlayer(data.location.x, data.location.y, 'purple-guy', data.id);
-                user.actualLocation = data.location
-                self.users.push(user);
-            }
-            else {
-                user[0].actualLocation = data.location;
-            }
+            self.loadUser(data);
         });
     },
     //executed multiple times per second
