@@ -26,5 +26,7 @@ function MoveableAnimator(sprite, loopSpeed, stopped, left, right, up, down, isR
     this.stop = function() {
         sprite.animations.stop();
         sprite.animations.play(this.stopped);
+        if(isRightReversed && sprite.scale.x < 0)
+            sprite.scale.x *= -1;
     };
 };
