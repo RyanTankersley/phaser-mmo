@@ -13,7 +13,7 @@ var getSillyText = function() {
     return finalAdj + ' ' + finalnoun;
 };
     
-function Player(sprite, animator) {
+function Player(sprite, mover) {
     this.sprite = sprite;
     this.RUNNING_SPEED = 100; 
     var self = this;
@@ -24,21 +24,7 @@ function Player(sprite, animator) {
     };
     
     var move = function(controls) {
-        var x = controls.left ? -self.RUNNING_SPEED : controls.right ? self.RUNNING_SPEED : 0;
-        var y = controls.up ? -self.RUNNING_SPEED : controls.down ? self.RUNNING_SPEED : 0;
-        self.sprite.body.velocity.x = x;
-        self.sprite.body.velocity.y = y;
-        
-        if(y > 0)
-            animator.play(animator.down);
-        else if(y < 0)
-            animator.play(animator.up);
-        else if(x > 0)
-            animator.play(animator.right);
-        else if(x < 0)
-            animator.play(animator.left);
-        else
-            animator.stop();
+        mover.move(controls, self.RUNNING_SPEED);
     };
     
     this.update = function(cursors) {
@@ -68,14 +54,18 @@ function PlayerFactory(game) {
         return new MoveableAnimator(sprite, 5, stopped, left, 'willplayleft', up, down, true);
     };
     
+    var getMover = function(sprite) {
+        return new PlayerMover(sprite, getAnimationManager(sprite))    
+    };
+    
     this.createPlayer = function(x, y, key) {
         var sprite = getSprite(x, y, key);
         
-        return new Player(sprite, getAnimationManager(sprite));
+        return new Player(sprite, getMover(sprite));
     };
     
     this.createNonPlayer = function(x, y, key, name) {
         var sprite = getSprite(x, y, key);
-        return new NonPlayer(sprite, name, getAnimationManager(sprite));
+        return new NonPlayer(sprite, name, getMover(sprite));
     }
 };
