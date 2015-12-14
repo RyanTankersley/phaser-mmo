@@ -24,37 +24,21 @@ function Player(sprite, animator) {
     };
     
     var move = function(controls) {
-        var anim;
-        if(controls.any) {
-            if(controls.horizontal) {
-                if(controls.left) {
-                    anim = animator.left;
-                    self.sprite.body.velocity.x = -self.RUNNING_SPEED;
-                } else {
-                    anim = animator.right;
-                    self.sprite.body.velocity.x = self.RUNNING_SPEED;
-                }
-            } else {
-                self.sprite.body.velocity.x = 0;
-            }
-            
-            if(controls.vertical) {
-                if(controls.up) {
-                    self.sprite.body.velocity.y = -self.RUNNING_SPEED;
-                    anim = animator.up;
-                } else {
-                    self.sprite.body.velocity.y = self.RUNNING_SPEED;
-                    anim = animator.down;
-                }
-            } else {
-                self.sprite.body.velocity.y = 0;
-            }
-            
-            animator.play(anim);
-        } else {
+        var x = controls.left ? -self.RUNNING_SPEED : controls.right ? self.RUNNING_SPEED : 0;
+        var y = controls.up ? -self.RUNNING_SPEED : controls.down ? self.RUNNING_SPEED : 0;
+        self.sprite.body.velocity.x = x;
+        self.sprite.body.velocity.y = y;
+        
+        if(y > 0)
+            animator.play(animator.down);
+        else if(y < 0)
+            animator.play(animator.up);
+        else if(x > 0)
+            animator.play(animator.right);
+        else if(x < 0)
+            animator.play(animator.left);
+        else
             animator.stop();
-            self.sprite.body.velocity.setTo(0);
-        }
     };
     
     this.update = function(cursors) {

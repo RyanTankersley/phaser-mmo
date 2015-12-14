@@ -11,11 +11,9 @@ describe('Sprites', function() {
                     velocity: {
                         x: 0,
                         y: 0,
-                        setTo: function(x) {}
                     }
                 }  
             };
-            spyOn(sprite.body.velocity, 'setTo');
             animator = {
                 up: 'up',
                 right: 'right',
@@ -133,7 +131,8 @@ describe('Sprites', function() {
         it('should stop', function() {
             player.update(controls);
             expect(animator.stop).toHaveBeenCalled;
-            expect(sprite.body.velocity.setTo).toHaveBeenCalledWith(0);
+            expect(sprite.body.velocity.x).toEqual(0);
+            expect(sprite.body.velocity.y).toEqual(0);
         });
     });
     

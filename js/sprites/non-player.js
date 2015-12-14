@@ -6,7 +6,6 @@ function NonPlayer(sprite, name, animator) {
     this.actualLocation;
     
     var fuzzyCheck = function(num1, num2, fuzz) {
-        console.log(Math.abs(num1 - num2));
         return Math.abs(num1 - num2) >= fuzz;    
     };
     
@@ -14,7 +13,6 @@ function NonPlayer(sprite, name, animator) {
     this.update = function() {
         var prevLoc = {x: self.sprite.x, y: self.sprite.y};
         
-        console.log(prevLoc);
         var fuzzY = fuzzyCheck(self.actualLocation.y, prevLoc.y, 3);
         var fuzzX = fuzzyCheck(self.actualLocation.x, prevLoc.x, 3);
         var isUp = self.actualLocation.y < prevLoc.y && fuzzY;
